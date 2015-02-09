@@ -10,14 +10,17 @@ function StretchCell(inner, width, height) {
 };
 
 StretchCell.prototype.minWidth = function() {
+
     return Math.max(this.inner.minWidth(), this.width);
 };
 
 StretchCell.prototype.minHeight = function() {
+
     return Math.max(this.inner.minHeight(), this.height);
 };
 
 StretchCell.prototype.draw = function(width, height) {
+
     return this.inner.draw(width,height);
 };
 

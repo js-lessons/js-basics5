@@ -19,16 +19,47 @@
 // And another one that takes JavaScript object as value source
 
 function ArraySeq(arr) {
+    this.array = arr;
 }
 
 function RangeSeq(from, to) {
+    this.array;
+    this.createArray(from,to);
+}
+
+RangeSeq.prototype.createArray = function(from, to){
+    var arr = [];
+    if(from > to){
+        for(var i = from; from >= to; from--){
+            arr.push(from);
+        }
+    }else{
+        for(var i = from; from <= to; from++){
+            arr.push(from);
+        }
+    }
+    this.array = arr;
 }
 
 function HashSeq(obj) {
-  // For tests to pass current value should have property Object.keys(obj)[0]
+    this.array;
+    this.createArray(obj);
+}
+
+HashSeq.prototype.createArray = function(obj){
+    var arr = [];
+    for(var key in obj){
+        arr.push([key,obj[key]]);
+    }
+    this.array = arr;
 }
 
 function logFive(seq) {
+    var arr = [];
+    var lgth = seq.array.length <= 5 ? seq.array.length : 5;
+    for(var i=0; i < lgth; i++){
+        console.log(seq.array[i]);
+    }
 }
 
 module.exports = {

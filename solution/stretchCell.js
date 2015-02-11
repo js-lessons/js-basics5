@@ -4,6 +4,18 @@ function StretchCell(inner, width, height) {
   // It should wrap another cell (like UnderlinedCell does)
   // and ensure that the resulting cell has at least the given
   // width and height, even if the inner cell would naturally be smaller.
+  this.inner = inner;
+  this.width = width;
+  this.height = height;
+};
+StretchCell.prototype.minWidth = function() {
+	return Math.max(this.inner.minWidth(), this.width);
+};
+StretchCell.prototype.minHeight = function() {
+	return Math.max(this.inner.minHeight(), this.height);
+};
+StretchCell.prototype.draw = function() {
+	return this.inner.draw(this.width, this.height);
 };
 
 module.exports = StretchCell;

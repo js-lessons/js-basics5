@@ -1,4 +1,4 @@
-var StretchCell = require('../solution/StretchCell');
+var StretchCell = require('../solution/stretchCell');
 
 describe('StretchCell', function() {
   describe('interface', function() {

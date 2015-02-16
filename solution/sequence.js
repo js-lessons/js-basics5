@@ -18,17 +18,49 @@
 // integers (taking from and to arguments to its constructor) instead.
 // And another one that takes JavaScript object as value source
 
+function Iterator(seq){
+	this.seq = seq;
+}
+
+Iterator.prototype.next = function(){
+	var current = this.seq[0];
+	this.seq = this.seq.slice(1);
+	return current;
+}
+
+Iterator.prototype.hasNext = function(){
+	return this.seq.length;
+}
+
 function ArraySeq(arr) {
+	this.seq = arr;
+	this.iterator = new Iterator(this.seq);
 }
 
 function RangeSeq(from, to) {
+  var range = function(start, end, step, arr){
+    if (!step) return range(start, end, (start < end)? 1:-1, arr);
+    if ((end - start) * step < 0) return arr;
+    else return range(start + step, end, step, arr.concat([start]));
+  }
+  this.seq = range(from, to, undefined, []);
+  this.iterator = new Iterator(this.seq);
 }
 
 function HashSeq(obj) {
   // For tests to pass current value should have property Object.keys(obj)[0]
+  this.seq = [];
+  for (prop in obj) this.seq.push([prop, obj[prop]]);
+  this.iterator = new Iterator(this.seq);
 }
 
 function logFive(seq) {
+	var iter = seq.iterator;
+	for (var i = 0; i < 5; i++) if (iter.hasNext())
+	{
+		console.log(iter.next()); 
+	}
+   	
 }
 
 module.exports = {

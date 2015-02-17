@@ -17,18 +17,57 @@
 // object type RangeSeq that iterates over a range of
 // integers (taking from and to arguments to its constructor) instead.
 // And another one that takes JavaScript object as value source
+function Iterator() {
+	this.seq = [];
+	this.seqPos = -1;
+}
+
+Iterator.prototype.next = function() {
+	if (this.seqPos>=this.seq.length-1) {
+		return false;
+	} else {
+		this.seqPos++;
+		return true;
+	}
+}
+
+Iterator.prototype.current = function() {
+	return this.seq[this.seqPos];
+}
 
 function ArraySeq(arr) {
+	this.iter = new Iterator();
+	this.iter.seq = arr;
 }
 
 function RangeSeq(from, to) {
+	this.iter = new Iterator();
+	if (from<to) {
+		for (var i=from; i<=to; i++) {
+			this.iter.seq.push(i);
+		}
+	} else if (from>to) {
+		for (var i=from; i>=to; i--) {
+			this.iter.seq.push(i);
+		}
+	}
 }
 
 function HashSeq(obj) {
   // For tests to pass current value should have property Object.keys(obj)[0]
+	this.iter = new Iterator();
+	for (var key in obj) {
+		this.iter.seq.push([key, obj[key]]);
+	}
 }
 
 function logFive(seq) {
+	for (var i=0; i<5; i++) {
+		if(!seq.iter.next()) {
+			break;
+		}
+		console.log(seq.iter.current());
+	}
 }
 
 module.exports = {

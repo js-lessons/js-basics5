@@ -12,7 +12,7 @@ StretchCell.prototype.minWidth = function() {
   if(this.inner.minWidth() < this.width){
     return this.width;
   }else{
-    this.inner.minWidth()
+    return this.inner.minWidth()
   }
 };
 StretchCell.prototype.minHeight = function() {
